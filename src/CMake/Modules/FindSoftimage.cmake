@@ -5,21 +5,21 @@
 #------------------------------------------------------------------------------------------------
 #  Author: Alan Jones - Email: skyphyr@gmail.com
 #  Copyright (C) 2010  Troublemaker Studios
-# 
+#
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU Affero General Public License as
 #  published by the Free Software Foundation, either version 3 of the
 #  License, or (at your option) any later version.
-# 
+#
 #  This program is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU Affero General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #------------------------------------------------------------------------------------------------
-   
+
 # It provides a preprocessor definiton SOFTIMAGE_<MAJORVERSION>_<MINORVERSION>
 # So for 2011 Subscription Advantage Pack this would be SOFTIMAGE_9_5
 # If you need to have version specific code in your plugins use #ifdef SOFTIMAGE_9_5
@@ -51,6 +51,7 @@
 
 #Choose directories to search based on version
 set (SOFTPATHS_12_0
+   "D:/Softimage/Softimage 2014 SP2 QFE2/XSISDK/include/"
    "c:/Program Files/Autodesk/Softimage 2014/XSISDK/include/"
    /usr/Softimage/Softimage_2014/XSISDK/include/
    /usr/local/Softimage/Softimage_2014/XSISDK/include/
@@ -312,7 +313,7 @@ else ()
    )
 endif ()
 
-set (Softimage_LIBRARIES 
+set (Softimage_LIBRARIES
    ${Softimage_CORESDK_LIBRARY}
    ${Softimage_CPPSDK_LIBRARY}
 )
@@ -323,7 +324,10 @@ get_filename_component (Softimage_LIBRARY_DIR ${Softimage_CORESDK_LIBRARY} PATH 
 #Check which version we wound up with
 set (Softimage_MAJOR_VERSION 0)
 set (Softimage_MINOR_VERSION 0)
-if (${Softimage_INCLUDE_DIR} MATCHES "Softimage.2014")
+if (${Softimage_INCLUDE_DIR} MATCHES "Softimage 2014 SP2")
+   set (Softimage_MAJOR_VERSION 12)
+   set (Softimage_MINOR_VERSION 1)
+elseif (${Softimage_INCLUDE_DIR} MATCHES "Softimage.2014")
    set (Softimage_MAJOR_VERSION 12)
    set (Softimage_MINOR_VERSION 0)
 elseif (${Softimage_INCLUDE_DIR} MATCHES "Softimage.2013.SP1")
@@ -474,7 +478,7 @@ function (add_mentalray_shader name)
 
    set_target_properties (${name} PROPERTIES PREFIX "")
 
-   install (TARGETS ${name} 
+   install (TARGETS ${name}
       RUNTIME DESTINATION ${Softimage_MENTALRAY_DESTINATION}
       LIBRARY DESTINATION ${Softimage_MENTALRAY_DESTINATION}
    )
